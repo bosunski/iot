@@ -1,0 +1,25 @@
+body {
+  margin: 1em auto;
+}
+
+div, form {
+  margin: 1em;
+}
+
+.demo {
+  display: inline-block;
+  text-align: center;
+  margin-left: 120px;
+  margin-top: 60px;
+}
+
+.speedometer {
+  width: 500px;
+  height: 500px;
+  /*border: 1px dotted red;*/
+  margin: 10px;
+}
+
+.controls {
+  width: 500px;
+}
