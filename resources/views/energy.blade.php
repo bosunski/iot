@@ -4,11 +4,11 @@
     <title>Shards Dashboard Lite - Free Bootstrap Admin Template – DesignRevision</title>
     <meta name="description" content="A high-quality &amp; free Bootstrap admin dashboard template pack that comes with lots of templates and components.">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" id="main-stylesheet" data-version="1.1.0" href="styles/shards-dashboards.1.1.0.min.css">
-    <link rel="stylesheet" href="styles/extras.1.1.0.min.css">
+    <link rel="stylesheet" id="main-stylesheet" data-version="1.1.0" href="/styles/shards-dashboards.1.1.0.min.css">
+    <link rel="stylesheet" href="/styles/extras.1.1.0.min.css">
     <script async="" defer="" src="https://buttons.github.io/buttons.js"></script>
   <style type="text/css">/* Chart.js */
 @-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes    chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}</style><script type="text/javascript" charset="utf-8" async="" src="https://platform.twitter.com/js/button.3ebb4253c7cb2cc3c9eaac42044fc82c.js"></script><style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}.fb_link img{border:none}@keyframes    fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
@@ -98,7 +98,7 @@
                     <div class="d-flex flex-column m-auto">
                       <div class="stats-small__data text-center">
                         <span class="stats-small__label text-uppercase">Voltage</span>
-                        <h6 id="valVoltage" class="stats-small__value count my-3">{{ $value->voltage }}</h6>
+                        <h6 id="valVoltage" class="stats-small__value count my-3">{{ $value ? $value->voltage : 0 }}</h6>
                       </div>
                       <div class="stats-small__data">
                         <!-- <span class="stats-small__percentage stats-small__percentage--increase">12.4%</span> -->
@@ -114,7 +114,7 @@
                     <div class="d-flex flex-column m-auto">
                       <div class="stats-small__data text-center">
                         <span class="stats-small__label text-uppercase">Current</span>
-                        <h6 id="valCurrent" class="stats-small__value count my-3">{{ $value->current }}</h6>
+                        <h6 id="valCurrent" class="stats-small__value count my-3">{{ $value ? $value->current : 0 }}</h6>
                       </div>
                       <div class="stats-small__data">
                         <!-- <span class="stats-small__percentage stats-small__percentage--increase">4.7%</span> -->
@@ -131,7 +131,7 @@
                     <div class="d-flex flex-column m-auto">
                       <div class="stats-small__data text-center">
                         <span class="stats-small__label text-uppercase">Power</span>
-                        <h6 id="valPower" class="stats-small__value count my-3">{{ $value->power }}</h6>
+                        <h6 id="valPower" class="stats-small__value count my-3">{{ $value ? $value->power : 0 }}</h6>
                       </div>
                       <div class="stats-small__data">
                         <!-- <span class="stats-small__percentage stats-small__percentage--decrease">2.4%</span> -->
@@ -149,7 +149,7 @@
                     <div class="d-flex flex-column m-auto">
                       <div class="stats-small__data text-center">
                         <span class="stats-small__label text-uppercase">Energy</span>
-                        <h6 id="valEnergy" class="stats-small__value count my-3">{{ $value->energy }}</h6>
+                        <h6 id="valEnergy" class="stats-small__value count my-3">{{ $value ? $value->energy : 0 }}</h6>
                       </div>
                       <div class="stats-small__data">
                         <!-- <span class="stats-small__percentage stats-small__percentage--decrease">3.8%</span> -->
@@ -207,8 +207,8 @@
                             <div class="custom-control custom-toggle custom-toggle-sm mb-1">
                               {{--<input  type="checkbox" id="customToggle1" name="customToggle1" class="">--}}
 {{--                                @if($value->state === "on")--}}
-                                <button id="stateButton" data-state="{{ $value->state }}" class="btn {{ $value->state === "on" ? "btn-danger" : "btn-success" }}">
-                                    {{ $value->state === "on" ? "Turn Off" : "Turn On" }}
+                                <button id="stateButton" data-state="{{ $value ? $value->state : 'off' }}" class="btn {{ $value && $value->state === "on" ? "btn-danger" : "btn-success" }}">
+                                    {{ $value && $value->state === "on" ? "Turn Off" : "Turn On" }}
                                 </button>
                                 {{--@else--}}
                                 {{--<button id="turnOnButton" class="btn btn-success">--}}
@@ -279,9 +279,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
     <script src="https://unpkg.com/shards-ui@latest/dist/js/shards.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sharrre/2.0.1/jquery.sharrre.min.js"></script>
-    <script src="scripts/extras.1.1.0.min.js"></script>
-    <script src="scripts/shards-dashboards.1.1.0.min.js"></script>
-    <script src="scripts/app/app-blog-overview.1.1.0.js"></script>
+    <script src="/scripts/extras.1.1.0.min.js"></script>
+    <script src="/scripts/shards-dashboards.1.1.0.min.js"></script>
+    <script src="/scripts/app/app-blog-overview.1.1.0.js"></script>
     <script src="/js/socket.io.js"></script>
 
     <script type="text/javascript">
@@ -334,7 +334,7 @@
             // });
 
             window.setInterval(function() {
-                $.get('/sensor/value', function(response) {
+                $.get('/sensor/{{ $deviceId }}/value', function(response) {
                   $('#valVoltage').html(response.voltage);
                   $('#valCurrent').html(response.current);
                   $('#valPower').html(response.power);

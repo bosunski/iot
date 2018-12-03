@@ -40,21 +40,22 @@ class SensorController extends Controller
         }
     }
 
-    public function getLatestValue()
+    public function getLatestValue($deviceId)
     {
-        $value = Value::where('id', '!=', null)->first();
+        $value = Value::where('device_id', $deviceId)->first();
         return $value ? $value : [];
     }
 
-    public function showSpeedometer()
+    public function showSpeedometer($deviceId)
     {
-        $data['speedometer'] = $this->getLatestValue();
+        $data['speedometer'] = $this->getLatestValue($deviceId);
         return view('speedometer', $data);
     }
 
-    public function showEnergyPage()
+    public function showEnergyPage($deviceId)
     {
-        $data['value'] = $this->getLatestValue();
+        $data['value'] = $this->getLatestValue($deviceId);
+        $data['deviceId'] = $deviceId;
         return view('energy', $data);
     }
 

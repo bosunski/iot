@@ -15,6 +15,7 @@ class CreateValuesTable extends Migration
     {
         Schema::create('values', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('device_id');
             $table->string('temperature');
             $table->string('time');
             $table->string('current');

@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Foundation\MqttHandler;
 use App\Foundation\MqttHelper;
 use App\Value;
 use Illuminate\Console\Command;
@@ -82,33 +83,6 @@ class StartMQTTServer extends Command
 	    $worker->run();
     }
 
-    private function updateData($data)
-    {
-    	return $this->updateValue(json_decode($data, true));
-    }
-
-	public function getLatestValue()
-	{
-		$value = Value::where('id', '!=', null)->first();
-		return $value ? $value : [];
-	}
-
-	private function updateValue($data)
-	{
-		$value = $this->getLatestValue();
-		$value = Value::where('id', $value->id)->update($data);
-		return $value;
-	}
-
-	protected function setArgs(): self
-	{
-		global $argv;
-
-		$argv[1] = $this->argument('action');
-
-		return $this;
-	}
-
 	private function runNow()
 	{
 		$loop = \React\EventLoop\Factory::create();
@@ -116,7 +90,7 @@ class StartMQTTServer extends Command
 		$connector = new DnsConnector(new TcpConnector($loop), $dnsResolverFactory->createCached('8.8.8.8', $loop));
 		$client = new ReactMqttClient($connector, $loop);
 
-// Bind to events
+		// Bind to events
 		$client->on('open', function () use ($client) {
 			// Network connection established
 			echo sprintf("Open: %s:%s\n", $client->getHost(), $client->getPort());
@@ -141,18 +115,7 @@ class StartMQTTServer extends Command
 
 		$client->on('message', function (Message $message) {
 			// Incoming message
-			echo 'Message';
-
-			if ($message->isDuplicate()) {
-				echo ' (duplicate)';
-			}
-
-			if ($message->isRetained()) {
-				echo ' (retained)';
-			}
-
-			echo ': '.$message->getTopic().' => '.mb_strimwidth($message->getPayload(), 0, 50, '...');
-			echo "\n";
+			(new MqttHandler)->getGlobalTopicHandler($message);
 		});
 
 		$client->on('warning', function (\Exception $e) {
@@ -165,39 +128,17 @@ class StartMQTTServer extends Command
 			$loop->stop();
 		});
 
-// Connect to broker
+		// Connect to broker
 		$client->connect(config('mqtt.host'))->then(
 			function () use ($client) {
 				// Subscribe to all topics
-				$client->subscribe(new DefaultSubscription('#'))
-				       ->then(function (Subscription $subscription) {
-					       echo sprintf("Subscribe: %s\n", $subscription->getFilter());
-				       })
-				       ->otherwise(function (\Exception $e) {
-					       echo sprintf("Error: %s\n", $e->getMessage());
-				       });
-
-				// Publish humidity once
-				$client->publish(new DefaultMessage('sensors/humidity', '55%'))
-				       ->then(function (Message $message) {
-					       echo sprintf("Publish: %s => %s\n", $message->getTopic(), $message->getPayload());
-				       })
-				       ->otherwise(function (\Exception $e) {
-					       echo sprintf("Error: %s\n", $e->getMessage());
-				       });
-
-				// Publish a random temperature every 10 seconds
-				$generator = function () {
-					return mt_rand(-20, 30);
-				};
-
-				$client->publishPeriodically(10, new DefaultMessage('sensors/temperature'), $generator)
-				       ->progress(function (Message $message) {
-					       echo sprintf("Publish: %s => %s\n", $message->getTopic(), $message->getPayload());
-				       })
-				       ->otherwise(function (\Exception $e) {
-					       echo sprintf("Error: %s\n", $e->getMessage());
-				       });
+				$client->subscribe( new DefaultSubscription( '#' ) )
+				       ->then( function ( Subscription $subscription ) {
+					       echo sprintf( "Subscribe: %s\n", $subscription->getFilter() );
+				       } )
+				       ->otherwise( function ( \Exception $e ) {
+					       echo sprintf( "Error: %s\n", $e->getMessage() );
+				       } );
 			}
 		);
 
