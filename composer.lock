@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "370fd94c4ca4c3892024eb345e2d98ab",
+    "content-hash": "3ec6d57f714c67234e6ce74745a16e21",
     "packages": [
         {
             "name": "binsoul/net-mqtt",
@@ -1184,6 +1184,50 @@
                 "schedule"
             ],
             "time": "2017-01-23T04:29:33+00:00"
+        },
+        {
+            "name": "neater/if",
+            "version": "0.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bosunski/nice-if.git",
+                "reference": "a3bbb8658d0661203c8d09b7cc2a9ceba3d40fac"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bosunski/nice-if/zipball/a3bbb8658d0661203c8d09b7cc2a9ceba3d40fac",
+                "reference": "a3bbb8658d0661203c8d09b7cc2a9ceba3d40fac",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.0",
+                "phpunit/phpunit": "^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "functions/condition.php"
+                ],
+                "psr-4": {
+                    "Neater\\Condition\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A package to make calling of if and else smarter and cleaner.",
+            "keywords": [
+                "condition",
+                "conditionals",
+                "if else",
+                "if this then that",
+                "iftt"
+            ],
+            "time": "2018-12-02T17:25:49+00:00"
         },
         {
             "name": "nesbot/carbon",

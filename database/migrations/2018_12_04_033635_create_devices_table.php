@@ -17,6 +17,7 @@ class CreateDevicesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->string('name');
+            $table->string('unique_id');
             $table->timestamps();
         });
     }

@@ -21,4 +21,5 @@ Route::get('/socket', 'SOcketController@index');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/device/create', 'HomeController@createDevice')->name('create.device');
+Route::get('/device/create', 'DeviceController@showNewDeviceForm')->name('create.device');
+Route::post('/device/create', 'DeviceController@createDevice')->name('create.device');

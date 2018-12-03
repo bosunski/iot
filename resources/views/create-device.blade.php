@@ -1,23 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                @if ($devices->count() === 0)
-                    <div class="panel-heading">Create your first Device</div>
-                @else
-                    <div class="panel-heading">Your Devices</div>
-                @endif
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                        <div class="panel-heading">Create device</div>
 
-                @if ($devices->count() === 0)
-                    <div class="panel-body">
-                        @if (session('status'))
-                            <div class="alert alert-success">
-                                {{ session('status') }}
-                            </div>
-                        @endif
+                        <div class="panel-body">
+                            @if (session('status'))
+                                <div class="alert alert-success">
+                                    {{ session('status') }}
+                                </div>
+                            @endif
                             <form class="form-horizontal" method="POST" action="{{ route('create.device') }}">
                                 {{ csrf_field() }}
                                 <input type="hidden" name="user_id" value="{{ Auth::user()->id }}"/>
@@ -62,11 +57,9 @@
                                     </div>
                                 </div>
                             </form>
-                    </div>
-                @else
-                @endif
+                        </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
 @endsection
