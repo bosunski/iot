@@ -15,7 +15,13 @@ class CreateValuesTable extends Migration
     {
         Schema::create('values', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('value');
+            $table->string('temperature');
+            $table->string('time');
+            $table->string('current');
+            $table->string('voltage');
+            $table->string('power');
+            $table->string('energy');
+            $table->enum('state', ['off', 'on']);
             $table->timestamps();
         });
     }

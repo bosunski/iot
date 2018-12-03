@@ -12,6 +12,8 @@
 */
 
 Route::post('/sensor/update', 'SensorController@updateSensorValue');
+Route::get('/energy', 'SensorController@showEnergyPage');
 Route::get('/sensor', 'SensorController@showSpeedometer');
 Route::get('/sensor/value', 'SensorController@getLatestValue');
 Route::get('/', 'PagesController@index');
+Route::get('/socket', 'SOcketController@index');
