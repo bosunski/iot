@@ -49,11 +49,12 @@ class TestMqttCommand extends Command
 	 */
     public function handle()
     {
+	    $this->mqtt->publish("sensors/temperature", "offff");
 	    for (;;) {
 		    $this->mqtt->clientid = str_random(12);
 		    $volt = random_int(200, 5000);
 		    $data = json_encode(['state' => "on", "voltage" => $volt, 'clientId' => $this->mqtt->clientid]);
-		    $this->mqtt->publish("device/state", $data);
+		    $this->mqtt->publish("sensors/temperature", $data);
 
 		    sleep(1);
 	    }

@@ -17,3 +17,8 @@ Route::get('/sensor', 'SensorController@showSpeedometer');
 Route::get('/sensor/value', 'SensorController@getLatestValue');
 Route::get('/', 'PagesController@index');
 Route::get('/socket', 'SOcketController@index');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/device/create', 'HomeController@createDevice')->name('create.device');
