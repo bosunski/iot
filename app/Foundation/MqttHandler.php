@@ -2,16 +2,12 @@
 
 namespace App\Foundation;
 
-
 use App\Device;
 use App\Value;
 use BinSoul\Net\Mqtt\Message;
 
 class MqttHandler
 {
-	static $message;
-	static $topic;
-
 	public function getGlobalTopicHandler(Message $message)
 	{
 		echo 'Message';
